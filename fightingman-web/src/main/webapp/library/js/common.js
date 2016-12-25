@@ -1,6 +1,6 @@
 function form2Json(id) {
 	var arr = $("#" + id).serializeArray();
-	console.log(arr);
+	console.log("form2Json="+arr);
 	var jsonStr = "";
 	jsonStr += '{';
 	for (var i = 0; i < arr.length; i++) {
@@ -28,6 +28,7 @@ function form2JsonStr(id) {
 	}
 	jsonStr = jsonStr.substring(0, (jsonStr.length - 1));
 	jsonStr += '}';
+	console.log("form2JsonStr="+jsonStr);
 	return jsonStr;
 };
 

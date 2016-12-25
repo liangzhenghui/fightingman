@@ -103,8 +103,8 @@ function editClassification(){
 }
 function newProductClassificationSubmit(){
 	var flag = $("#fm").form('validate');
-	url = '<%=contextPath%>/product-classification-create.json';
-	var data = form2Json("fm");
+	url = '<%=contextPath%>/product-classification-create.do';
+	var data = form2JsonStr("fm");
 	var flag = $("#fm").form('validate');
 	if(flag){
 		$.post(url,{data:data},function(data){
@@ -135,7 +135,7 @@ function newProductClassificationSubmit(){
 
 function editClassificationSubmit(){
 	url = '<%=contextPath%>/classification-edit.json';
-	var data = form2Json("fm1");
+	var data = form2JsonStr("fm1");
 	var flag = $("#fm1").form('validate');
 	if(flag){
 		$.post(url,{data:data},function(data){

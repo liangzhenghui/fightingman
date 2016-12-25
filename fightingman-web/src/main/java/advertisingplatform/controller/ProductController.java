@@ -142,6 +142,7 @@ public class ProductController {
 	 * @param request
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(value = "/product-classification-create")
 	public ModelAndView productClassificationCreate(@RequestParam("data") String data) {
 		JSONObject json = JSONObject.parseObject(data);

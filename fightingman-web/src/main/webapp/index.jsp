@@ -15,7 +15,7 @@ String username = user.getUsername();
 <link href="<%=contextPath%>/library/js/zTree/zTreeStyle.css" rel="stylesheet" />
 <script src="<%=contextPath%>/library/js/jquery/jquery-1.7.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<%=contextPath%>/library/js/easyui/jquery.easyui.min.js"></script>
-<title>土匪窝</title>
+<title>大计划</title>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',border:false" style="background:#B3DFDA;">
