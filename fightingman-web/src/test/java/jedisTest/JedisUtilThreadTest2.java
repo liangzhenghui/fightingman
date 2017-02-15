@@ -1,17 +1,15 @@
 package jedisTest;
 
-import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apache.commons.lang.StringUtils;
-
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Response;
-import redis.clients.jedis.Transaction;
 import util.JedisUtil;
-
+/**
+ * 测试redis事务,秒杀系统demo
+ * @author liangzhenghui
+ *
+ */
 public class JedisUtilThreadTest2 {
 
 	public static void main(String[] args) {
