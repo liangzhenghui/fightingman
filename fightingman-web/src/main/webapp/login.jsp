@@ -28,11 +28,9 @@
             <input class="easyui-textbox" type="password" value='123456' id="password" name="password" data-options="required:true" style="width:100%;height:32px">
         </div>
         <div>
-            <a href="#" id="loginBtn" class="easyui-linkbutton"  style="float:left;width:50%;height:32px">登陆</a>
-            <a href="http://192.168.66.144:8080/oauth2/oauth2/authorize?client_id=fbed1d1b4b1449daa4bc49397cbe2350&response_type=code&redirect_uri=http://192.168.66.144:6688/framework/index.jsp" id="loginBtn" class="easyui-linkbutton"  style="width:50%;height:32px;background: green;">华资oauth2登陆</a>
+            <a href="#" id="loginBtn" class="easyui-linkbutton"  style="float:left;width:100%;height:32px">登陆</a>
         </div>
          <div>
-            
         </div>
     </div>
 	</center>

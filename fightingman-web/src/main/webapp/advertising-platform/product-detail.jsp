@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page language="java"  import="wlgl.service.OrderService"%>
 <%@ page language="java"  import="ums.service.UserManager"%>
 <%@ page language="java"  import="ums.model.User"%>
 <%String contextPath = request.getContextPath();%>

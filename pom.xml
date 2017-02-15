@@ -10,5 +10,6 @@
   <modules>
   	<module>fightingman-common</module>
     <module>fightingman-web</module>
+    <module>fightingman-weixin</module>
   </modules>
 </project>

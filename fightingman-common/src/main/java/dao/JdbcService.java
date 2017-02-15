@@ -39,7 +39,7 @@ public class JdbcService {
 
 	// 返回记录的条数
 	public int count(String sql, Object[] args) {
-		return jdbcTemplate.queryForInt(sql, args);
+		return jdbcTemplate.queryForObject(sql, args, Integer.class); 
 	}
 
 	public JdbcTemplate getJdbcTemplate() {

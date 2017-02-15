@@ -26,7 +26,7 @@ String username = user.getUsername();
 						</td>
 						<td style="height:52px;">
 							<div style="color:#fff;font-size:22px;font-weight:bold;">
-								<a href="#" style="color:#000;font-size:22px;font-weight:bold;text-decoration:none">土匪窝</a>
+								<a href="#" style="color:#000;font-size:22px;font-weight:bold;text-decoration:none">大计划</a>
 							</div>
 							<div style="color:#fff">
 								<a href="#" style="color:#000;text-decoration:none"></a>
