@@ -16,7 +16,7 @@
 
 	<mvc:annotation-driven />
 	<!--检测注解 -->
-	<context:component-scan base-package="ums.controller,advertisingplatform.controller,weixin.controller" />
+	<context:component-scan base-package="ums.controller,salesplatform.controller,weixin.controller" />
 	<!-- 支持上传文件 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

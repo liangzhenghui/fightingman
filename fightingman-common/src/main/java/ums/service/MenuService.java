@@ -166,7 +166,10 @@ public class MenuService {
 		for (Object object : roleMenus) {
 			RoleMenu roleMenu = (RoleMenu) object;
 			if (null != roleMenu) {
-				menuList.add(getMenuById(roleMenu.getMenuId()));
+				Menu menu=getMenuById(roleMenu.getMenuId());
+				if(menu!=null){
+					menuList.add(menu);
+				}
 			}
 		}
 		return menuList;

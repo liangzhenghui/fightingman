@@ -45,14 +45,14 @@ public class TestRedisTemplate {
       //   jedis.auth("password");
      }
 
-	//@Test
+	@Test
 	public void testOperationalViews(){
 		addLink("test26666", "1");
 		//addLink("test26666", "2");
 		//addLink("test26666", "3");
 		list();
 	}
-	@Test
+	//@Test
 	public void testTrans() throws InterruptedException, ExecutionException{
 		 //execute a transaction
 		/*List<Object> txResults = redisTemplate.execute(new SessionCallback<List<Object>>() {
@@ -120,9 +120,9 @@ public class TestRedisTemplate {
 	  }
 	 public void list(){
 		  List<String> list =listOps.range("test26666", 0, -1);
-	    for(String test:list){
+	   /* for(String test:list){
 	    	System.out.println(test);
-	    }
+	    }*/
 	 }
 
 }

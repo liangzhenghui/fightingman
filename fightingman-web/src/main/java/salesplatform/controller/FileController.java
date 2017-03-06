@@ -50,6 +50,7 @@ public class FileController {
 		String type = original_name.substring(original_name.indexOf(".")+1);
 		String product_id = request.getParameter("productId");
 		Date currenTime = new Date();
+		String test = request.getServletPath();
 		String filePath = request.getSession().getServletContext()
 				.getRealPath("/");
 		/*filePath += "images" + File.separator
@@ -64,6 +65,7 @@ public class FileController {
 		String fileName = new Date().getTime() + "."+type;
 		// 保存到本地
 		fileService.saveInputStreamToFile(file.getInputStream(),filePath,fileName);
+		//fileService.saveThumbnail(filePath,fileName);
 		//记录信息到数据库
 		fileService.saveFile(product_id, original_name, fileName,type);
 	}

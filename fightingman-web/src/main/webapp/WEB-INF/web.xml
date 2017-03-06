@@ -13,7 +13,7 @@
             classpath:spring/applicationContext-service.xml,
             classpath:spring/applicationContext-aop.xml,
             classpath:spring/applicationContext-tx.xml
-            classpath:advertisingplatform/applicationContext-service-product.xml
+            classpath:salesplatform/applicationContext-service-product.xml
 		</param-value>
     </context-param>
    <listener>

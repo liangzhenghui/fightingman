@@ -25,11 +25,11 @@ import junit.framework.Assert;
  * 
  * loader 			使用指定上下文加载器加载配置文件 XbeanContextLoader.class 可以读取上下文配置文件中的自定义标签
  */
-@ContextConfiguration(locations = {
+/*@ContextConfiguration(locations = {
 		"classpath:spring/applicationContext-form.xml",
 		"classpath:spring/applicationContext-form-ums.xml",
 		"classpath:spring/applicationContext-service-business.xml" })
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)*/
 /**
  * 若该测试用例 在测试过程中 无需使用数据源 则不用继承任何类 若需使用开发库数据源 请继承 DBTestCaseInDevDb 若需使用测试库数据源
  * 请继承 DBTestCaseInUtDb

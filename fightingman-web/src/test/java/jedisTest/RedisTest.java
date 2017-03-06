@@ -102,7 +102,7 @@ public class RedisTest {
 		jedis.disconnect();
 	}
 	
-	@Test
+	//@Test
 	public void test2Trans() {
 		Jedis jedis = new Jedis("localhost");
 		jedis.watch("hello");
