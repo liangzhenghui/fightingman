@@ -1,5 +1,7 @@
 package annotation;
 
+import org.apache.http.util.EntityUtils;
+
 /**
  * 要使用SayHiAnnotation的元素所在类
  * 由于我们定义了只有方法才能使用我们的注解，我们就使用多个方法来进行测试

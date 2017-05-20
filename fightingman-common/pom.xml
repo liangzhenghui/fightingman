@@ -182,5 +182,15 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
 		</dependency>
+		<dependency>
+		    <groupId>io.springside</groupId>
+		    <artifactId>springside-utils</artifactId>
+		    <version>5.0.0-RC1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springside</groupId>
+		    <artifactId>springside-core</artifactId>
+		    <version>4.2.2</version>
+		</dependency>
 	</dependencies>
 </project>

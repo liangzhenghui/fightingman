@@ -21,7 +21,7 @@ public class JedisUtilTest {
     	 
      }
 
-	//@Test
+	@Test
 	public void testGet(){
 		JedisUtil.set("hello", "helloworld");
 		System.out.println(JedisUtil.getStr("hello"));

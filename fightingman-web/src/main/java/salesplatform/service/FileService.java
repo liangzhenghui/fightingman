@@ -21,22 +21,42 @@ import util.Im4Java;
 import util.UUIDGenerator;
 
 public class FileService {
+	
 	private JdbcService jdbcService;
-
-	public int saveFile(String bussiness_id, String origin_name, String fileName, String type) {
+	/**
+	 * 将字节保存到数据库
+	 * @param bussiness_id
+	 * @param origin_name
+	 * @param fileName
+	 * @param type
+	 * @param bytes
+	 * @return
+	 */
+	public int saveFile(String bussiness_id, String origin_name, String fileName, String type,byte[] bytes) {
 		String id = UUID.randomUUID().toString();
-		String sql = "insert into s_file(id,bussiness_id,origin_name,file_name,type,create_time) values(?,?,?,?,?,?)";
-		return jdbcService.update(sql, new Object[] { id, bussiness_id, origin_name, fileName, type, new Date() },
-				new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+		String sql = "insert into s_file(id,bussiness_id,content,origin_name,file_name,type,create_time) values(?,?,?,?,?,?,?)";
+		return jdbcService.update(sql, new Object[] { id, bussiness_id, bytes,origin_name, fileName, type, new Date() },
+				new int[] { Types.VARCHAR, Types.VARCHAR, Types.BLOB,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+						Types.TIMESTAMP });
+	}
+	/**
+	 * 保存文件路径到数据库
+	 * @param bussiness_id
+	 * @param origin_name
+	 * @param fileName
+	 * @param type
+	 * @param directory
+	 * @return
+	 */
+	public int saveFile(String bussiness_id, String origin_name, String fileName, String type,String directory) {
+		String id = UUID.randomUUID().toString();
+		String sql = "insert into s_file(id,bussiness_id,directory,origin_name,file_name,type,create_time) values(?,?,?,?,?,?,?)";
+		return jdbcService.update(sql, new Object[] { id, bussiness_id, directory,origin_name, fileName, type, new Date() },
+				new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
 						Types.TIMESTAMP });
 	}
 
-	public void saveImageInfoToDB(byte[] bytes) {
-		String sql = "insert into s_file(id,file_name,content,create_time) values(?,?,?,?)";
-		jdbcService.update(sql, new Object[] { UUIDGenerator.generateUUID(), "test", bytes, new Date() },
-				new int[] { Types.VARCHAR, Types.VARCHAR, Types.BLOB, Types.TIMESTAMP });
 
-	}
 
 	/**
 	 * 根据输入流保存文件

@@ -13,4 +13,12 @@
 	<bean id="fileService" class="salesplatform.service.FileService">
 		  <property name="jdbcService" ref="jdbcService" />
 	</bean>
+	<bean id="appService" class="salesplatform.service.AppService">
+		  <property name="jdbcService" ref="jdbcService" />
+		  <property name="fileService" ref="fileService" />
+	</bean>
+	<bean id="sexyBodyService" class="salesplatform.service.SexyBodyService">
+		  <property name="jdbcService" ref="jdbcService" />
+		  <property name="fileService" ref="fileService" />
+	</bean>
 </beans>

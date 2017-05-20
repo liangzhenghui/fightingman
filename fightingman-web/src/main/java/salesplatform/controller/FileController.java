@@ -64,10 +64,10 @@ public class FileController {
 		// 构造名字
 		String fileName = new Date().getTime() + "."+type;
 		// 保存到本地
-		fileService.saveInputStreamToFile(file.getInputStream(),filePath,fileName);
-		//fileService.saveThumbnail(filePath,fileName);
+		//fileService.saveInputStreamToFile(file.getInputStream(),filePath,fileName);
+		fileService.saveThumbnail(filePath,fileName);
 		//记录信息到数据库
-		fileService.saveFile(product_id, original_name, fileName,type);
+		fileService.saveFile(product_id, original_name, fileName,type,filePath);
 	}
 	
 
