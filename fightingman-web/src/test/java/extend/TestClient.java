@@ -3,7 +3,7 @@ package extend;
 public class TestClient {
 
 	public static void main(String[] args) {
-		Test1 test=new Test1();
+		Test3 test=new Test3();
 		test.template();
 	}
 

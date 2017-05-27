@@ -6,5 +6,10 @@ public class Test3 {
 	}
 	
 	public void help(){
+		System.out.println("test3-help");
+	}
+	
+	public void template(){
+		
 	}
 }

@@ -9,9 +9,4 @@ public class Test1 extends Test2{
 		System.out.println("1help");
 	}
 	
-	public void template(){
-		help();
-	}
-	
-	
 }
