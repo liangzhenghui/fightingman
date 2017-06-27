@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import salesplatform.service.AppService;
 
 @Controller
+@RequestMapping("/api")
 public class AppController {
 	@Resource
 	private AppService appService;

@@ -51,7 +51,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyProduct()">删除产品</a>
     </div>
 	<table id="productList" class="easyui-datagrid" 
-			url="<%=contextPath%>/product-list.json"
+			url="<%=contextPath%>/api/product-list.json"
 			title="产品管理" 
 			rownumbers="true" pagination="true" toolbar="#toolbar"  singleSelect="true">
 		<thead>
@@ -139,7 +139,7 @@ $(function() {
     	'auto':false,
     	'buttonText' : '请选择',
         'swf'      : '<%=contextPath%>/library/uploadify/uploadify.swf',
-        'uploader' : '<%=contextPath%>/product-img-upload.json',
+        'uploader' : '<%=contextPath%>/api/product-img-upload.json',
         'fileObjName'   : 'file',
         'onCancel' : function(file) {
             file_count--;
@@ -164,7 +164,7 @@ function newProduct(){
     $('#dlg').dialog('open').dialog('setTitle','新建产品');
     $('#fm').form('clear');
     $('#product_lb_id').combobox({
-        url:'<%=contextPath %>/get-product-lb-by-user.do',
+        url:'<%=contextPath %>/api/get-product-lb-by-user.do',
         valueField:'code',
         textField:'detail',
         onSelect:function(record){
@@ -182,7 +182,7 @@ function editProduct(){
         $("#lb_zw").val(row.lbZw);
         //注意这里不要和新建的product_lb_id相同
         $('#lb_id').combobox({
-            url:'<%=contextPath %>/get-product-lb-by-user.do?productId='+row.id,
+            url:'<%=contextPath %>/api/get-product-lb-by-user.do?productId='+row.id,
             valueField:'code',
             textField:'detail',
             onSelect:function(record){
@@ -198,7 +198,7 @@ function editProduct(){
     }
 }
 function newProductSubmit(){
-	url = '<%=contextPath%>/product-create.json';
+	url = '<%=contextPath%>/api/product-create.json';
 	var data = form2JsonStr("fm");
 	$('#product_lb_id').next().children("input[type='text']").addClass('selectInValid');
 	$('#product_lb_id').next().tooltip({
@@ -237,7 +237,7 @@ function newProductSubmit(){
 }
 
 function editProductSubmit(){
-	var url = '<%=contextPath%>/product-edit.json';
+	var url = '<%=contextPath%>/api/product-edit.json';
 	var data = form2JsonStr("fm1");
 	 $('#lb_id').next().children("input[type='text']").addClass('selectInValid');
  	$('#lb_id').next().tooltip({
@@ -275,7 +275,7 @@ function destroyProduct(){
     if (row){
         $.messager.confirm('删除功能','确定要删除么？',function(r){
             if (r){
-                $.post('<%=contextPath%>/product-delete.json',{id:row.id},function(json){
+                $.post('<%=contextPath%>/api/product-delete.json',{id:row.id},function(json){
                     if (json.result){
                     	$.messager.show({
         	                title: '提示',

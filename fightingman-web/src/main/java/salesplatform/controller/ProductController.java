@@ -1,5 +1,6 @@
 package salesplatform.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -9,15 +10,19 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
 
+import salesplatform.model.Page;
+import salesplatform.model.Product;
 import salesplatform.service.FileService;
 import salesplatform.service.ProductService;
 import util.UUIDGenerator;
 
 @Controller
+@RequestMapping("/api")
 public class ProductController {
 	@Resource
 	private ProductService productService;
@@ -111,6 +116,25 @@ public class ProductController {
 			model.addObject("result", false);
 		}
 		return model;
+	}
+	/**
+	 * 给app提供列表接口
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 * @throws IOException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/app/get-all-products")
+	public Page getProductByPageNum(@RequestParam("pageNum") String pageNum,@RequestParam("pageSize") String pageSize)
+			throws IOException {
+		List<Product> ProductList = productService.getProductByPage(Integer.parseInt(pageNum),
+				Integer.parseInt(pageSize));
+		Page<Product> page = new Page<Product>();
+		page.setData(ProductList);
+		int count = productService.getProductCount();
+		page.setTotalPage((count-1)/(Integer.parseInt(pageSize))+1);
+		return page;
 	}
 	/*
 	@RequestMapping(value = "/get-product-by-lb")

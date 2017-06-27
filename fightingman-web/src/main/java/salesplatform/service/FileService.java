@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import dao.JdbcService;
 import salesplatform.model.ProductImage;
 import util.Im4Java;
+import util.ImageUtil;
 import util.UUIDGenerator;
 
 public class FileService {
@@ -88,11 +89,20 @@ public class FileService {
 	}
 
 	public void saveThumbnail(int width, int height, String src, String dest) {
-		Im4Java.resizeImage(width, height, src, dest);
+		try {
+			ImageUtil.resize(src, dest, width, height, 100.0, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//Im4Java.resizeImage(width, height, src, dest);
 	}
-
-	public Map getContentByBussinessId(String bussinessId) {
-		String sql = "select t.content from s_file t where t.bussiness_id=? and t.delete_flag='0' order by t.create_time asc";
+	/**
+	 * 没有封面的情况下随意一张图片取第一张图片
+	 * @param bussinessId
+	 * @return
+	 */
+	public Map getRandomImageBussinessId(String bussinessId) {
+		String sql = "select t.* from s_file t where t.bussiness_id=? and t.delete_flag='0' order by t.create_time asc";
 		List list = jdbcService.queryForList(sql, new Object[] { bussinessId });
 		Map map = null;
 		if (null != list && list.size() > 0) {
@@ -108,7 +118,7 @@ public class FileService {
 	 * @return
 	 */
 	public Map getCoverImageByBussinessId(String bussinessId) {
-		String sql = "select t.content from s_file t where t.bussiness_id=?  and t.cover_image='1' and t.delete_flag='0' ";
+		String sql = "select t.* from s_file t where t.bussiness_id=?  and t.cover_image='1' and t.delete_flag='0' ";
 		return jdbcService.queryForSingleRow(sql, new Object[] { bussinessId });
 	}
 
@@ -207,7 +217,7 @@ public class FileService {
 	}
 
 	public Map getProductImageInfo(String imgId) {
-		String sql = "select * from s_file where bussiness_id=? and delete_flag='0' order by create_time asc";
+		String sql = "select * from s_file where id=? and delete_flag='0' order by create_time asc";
 		return jdbcService.queryForSingleRow(sql, new Object[] { imgId });
 	}
 	/**
@@ -233,9 +243,9 @@ public class FileService {
 		String smallDestFilePath = smallDestFile.getAbsolutePath() + File.separator + fileName;
 		String mediumDestFilePath = mediumDestFile.getAbsolutePath() + File.separator + fileName;
 		String largeDestFilePath = largeDestFile.getAbsolutePath() + File.separator + fileName;
-		Map<String, Object> imageInfo = Im4Java.getImageInfo(srcPath);
-		int width = (int) imageInfo.get("width");
-		int height = (int) imageInfo.get("height");
+		Map<String, Object> imageInfo = ImageUtil.getImageInfo(srcPath);
+		int width = (Integer)imageInfo.get("width");
+		int height = (Integer) imageInfo.get("height");
 		saveThumbnail(150, 150, srcPath, smallDestFilePath);
 		if (width > 300 || height > 300) {
 			saveThumbnail(300, 300, srcPath, mediumDestFilePath);
@@ -243,6 +253,7 @@ public class FileService {
 		if (width > 1024 || height > 1024) {
 			saveThumbnail(1024, 1024, srcPath, largeDestFilePath);
 		}
+		
 	}
 
 }

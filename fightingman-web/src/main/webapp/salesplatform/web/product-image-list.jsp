@@ -50,12 +50,12 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" singleSelect="true" onclick="deleteImage()">删除图片</a>
     </div>
 	<table id="productImageList" class="easyui-datagrid" 
-			url="<%=contextPath%>/images-list-of-product.json?id=<%=productId%>"
+			url="<%=contextPath%>/api/images-list-of-product.json?id=<%=productId%>"
 			title="菜式图片管理" 
 			rownumbers="true" pagination="true" toolbar="#toolbar"  singleSelect="true">
 		<thead>
 			<tr>
-				<th field="fileName" name="image" width="200" formatter="showImg">图片</th>
+				<th field="id" name="image" width="200" formatter="showImg">图片</th>
 				<th field="title" width="200">标题</th>
 				<th field="description" width="200">描述</th>
 				<th field="rollingImage" width="200" formatter="judgeRollingImage">是否为首页滚动图片</th>
@@ -119,7 +119,7 @@ $(function() {
     	'auto':false,
     	'buttonText' : '请选择',
         'swf'      : '<%=contextPath%>/library/uploadify/uploadify.swf',
-        'uploader' : '<%=contextPath%>/product-img-upload.json',
+        'uploader' : '<%=contextPath%>/api/product-img-upload.json',
         'fileObjName'   : 'file',
         'onUploadStart' : function(file) {
             $("#file_upload").uploadify("settings", "formData",{ 'productId': $("#productId").val()});
@@ -135,7 +135,7 @@ $(function() {
     });
 });
 function showImg(val,index){ 
-	var url = '<%=contextPath%>/images/small/'+val;
+	var url = '<%=contextPath%>/api/img.do?imgId='+val+'&type=small';
 	var img = "<img src='"+url+"' style='width:100px;height:100px'>";
     return img;
 }
@@ -143,7 +143,7 @@ function editImage(){
 	var row = $('#productImageList').datagrid('getSelected');
     if (row){
     	$("#imageId").val(row.id);
-    	var url = '<%=contextPath%>/img.do?imgId='+row.id;
+    	var url = '<%=contextPath%>/img.do?imgId='+row.id+'&type=small';
     	$("#product_img").attr("src",url);
         $('#dlg').dialog('open').dialog('setTitle','编辑图片基本信息');
         $('#fm').form('load',row);
@@ -180,7 +180,7 @@ function editImage(){
 }
 
 function editImageSubmit(){
-	var url = '<%=contextPath%>/image-edit.json';
+	var url = '<%=contextPath%>/api/image-edit.json';
 	var data = form2JsonStr("fm");
 	 $('#coverImage').next().children("input[type='text']").addClass('selectInValid');
  	$('#coverImage').next().tooltip({
@@ -259,7 +259,7 @@ function deleteImage(){
     if (row){
         $.messager.confirm('删除图片','确定要删除么？',function(r){
             if (r){
-                $.post('<%=contextPath%>/image-delete.json',{id:row.id},function(json){
+                $.post('<%=contextPath%>/api/image-delete.json',{id:row.id},function(json){
                     if (json.result){
                     	$.messager.show({
         	                title: '提示',

@@ -44,7 +44,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyLb()">删除类别</a>
     </div>
 	<table id="lbList" class="easyui-datagrid" 
-			url="<%=contextPath%>/product-lb-list.json"
+			url="<%=contextPath%>/api/product-lb-list.json"
 			title="类别管理" 
 			rownumbers="true" pagination="true" toolbar="#toolbar"  singleSelect="true">
 		<thead>
@@ -103,7 +103,7 @@ function editLb(){
 }
 function newProductLbSubmit(){
 	var flag = $("#fm").form('validate');
-	url = '<%=contextPath%>/newProductLb.json';
+	url = '<%=contextPath%>/api/newProductLb.json';
 	var data = form2JsonStr("fm");
 	var flag = $("#fm").form('validate');
 	if(flag){
@@ -133,7 +133,7 @@ function newProductLbSubmit(){
 }
 
 function editLbSubmit(){
-	url = '<%=contextPath%>/editProductLb.json';
+	url = '<%=contextPath%>/api/editProductLb.json';
 	var data = form2JsonStr("fm1");
 	var flag = $("#fm1").form('validate');
 	if(flag){
@@ -167,7 +167,7 @@ function destroyLb(){
     if (row){
         $.messager.confirm('删除功能','确定要删除么？',function(r){
             if (r){
-                $.post('<%=contextPath%>/lb-delete.json',{id:row.id},function(json){
+                $.post('<%=contextPath%>/api/lb-delete.json',{id:row.id},function(json){
                     if (json.result){
                     	$.messager.show({
         	                title: '提示',

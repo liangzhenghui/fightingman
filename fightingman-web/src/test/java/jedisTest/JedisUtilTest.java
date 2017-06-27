@@ -23,8 +23,8 @@ public class JedisUtilTest {
 
 	@Test
 	public void testGet(){
-		JedisUtil.set("hello", "helloworld");
-		System.out.println(JedisUtil.getStr("hello"));
+		//JedisUtil.set("hello", "helloworld");
+		//System.out.println(JedisUtil.getStr("hello"));
 	}
 	/*@Test
 	 * junit不支持多线程

@@ -32,6 +32,7 @@ import com.alibaba.fastjson.JSONObject;
  * 2015年9月14日 下午11:27:19
  */
 @Controller
+@RequestMapping("/api")
 public class LbController {
 	@Resource
 	private LbService lbService;

@@ -1,4 +1,4 @@
-package advertisingplatform.model;
+package salesplatform.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

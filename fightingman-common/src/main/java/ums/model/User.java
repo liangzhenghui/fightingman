@@ -1,11 +1,12 @@
 package ums.model;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-public class User implements RowMapper {
+public class User implements RowMapper,Serializable{
 	private String id;
 	private String userid;
 	private String username;

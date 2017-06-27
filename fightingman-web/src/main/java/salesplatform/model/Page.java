@@ -1,4 +1,4 @@
-package advertisingplatform.model;
+package salesplatform.model;
 
 import java.util.List;
 

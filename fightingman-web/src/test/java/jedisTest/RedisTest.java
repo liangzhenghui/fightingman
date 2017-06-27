@@ -50,7 +50,7 @@ public class RedisTest {
 	public void testTransaction() throws InterruptedException, ExecutionException{
 		 final String key = "test-cas-1";
 	        ExecutorService pool  = Executors.newCachedThreadPool();
-	        List<Callable<Object>> tasks = new ArrayList<>();
+	        List<Callable<Object>> tasks = new ArrayList();
 	        for(int i=0;i<5;i++){
 	            final int idx = i;
 	            tasks.add(new Callable() {

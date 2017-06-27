@@ -43,7 +43,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteAppVersion()">删除类别</a>
     </div>
 	<table id="app-version" class="easyui-datagrid" 
-			url="<%=contextPath%>/app-version-list.json"
+			url="<%=contextPath%>/api/app-version-list.json"
 			title="app版本管理" 
 			rownumbers="true" pagination="true" toolbar="#toolbar"  singleSelect="true">
 		<thead>
@@ -83,7 +83,7 @@ $(function() {
     	'auto':false,
     	'buttonText' : '请选择',
         'swf'      : '<%=contextPath%>/library/uploadify/uploadify.swf',
-        'uploader' : '<%=contextPath%>/app-version-create.do',
+        'uploader' : '<%=contextPath%>/api/app-version-create.do',
         'fileObjName'   : 'file',
         'onCancel' : function(file) {
             file_count--;
@@ -111,7 +111,7 @@ function createAppVersion(){
 
 function createAppVersionSubmit(){
 	var flag = $("#fm").form('validate');
-	url = '<%=contextPath%>/app-version-create.json';
+	url = '<%=contextPath%>/api/app-version-create.json';
 	var data = form2JsonStr("fm");
 	var flag = $("#fm").form('validate');
 	if(flag){
@@ -125,7 +125,7 @@ function deleteAppVersion(){
     if (row){
         $.messager.confirm('删除功能','确定要删除么？',function(r){
             if (r){
-                $.post('<%=contextPath%>/lb-delete.json',{id:row.id},function(json){
+                $.post('<%=contextPath%>/api/lb-delete.json',{id:row.id},function(json){
                     if (json.result){
                     	$.messager.show({
         	                title: '提示',
