@@ -161,11 +161,11 @@
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.5.0</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
