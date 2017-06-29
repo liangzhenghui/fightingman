@@ -143,7 +143,7 @@ function editImage(){
 	var row = $('#productImageList').datagrid('getSelected');
     if (row){
     	$("#imageId").val(row.id);
-    	var url = '<%=contextPath%>/img.do?imgId='+row.id+'&type=small';
+    	var url = '<%=contextPath%>/api/img.do?imgId='+row.id+'&type=small';
     	$("#product_img").attr("src",url);
         $('#dlg').dialog('open').dialog('setTitle','编辑图片基本信息');
         $('#fm').form('load',row);
