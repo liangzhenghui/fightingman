@@ -47,9 +47,9 @@ public class ImageUtil {
     /**
      * GraphicsMagick 安装目录
      */
-    //private static final String GRAPHICS_MAGICK_PATH = "C:\\Program Files\\GraphicsMagick-1.3.25-Q8";
+    private static final String GRAPHICS_MAGICK_PATH = "C:\\Program Files\\GraphicsMagick-1.3.25-Q8";
     
-    private static final String GRAPHICS_MAGICK_PATH = "/usr/local/GraphicsMagick-1.3.23";
+    //private static final String GRAPHICS_MAGICK_PATH = "/usr/local/GraphicsMagick-1.3.23";
     
 
     /**
