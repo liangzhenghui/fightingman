@@ -17,7 +17,7 @@ public class Product implements RowMapper{
 	private String lbId;
 	private String lbZw;
 	private String productDescription;
-
+	private String imageslist;
 	@Override
 	public Object mapRow(ResultSet rs, int arg1) throws SQLException {
 		Product product= new Product();
@@ -26,7 +26,15 @@ public class Product implements RowMapper{
 		product.setLbId(rs.getString("lb_id"));
 		product.setLbZw(rs.getString("lb_zw"));
 		product.setProductDescription(rs.getString("product_description"));
+		product.setImageslist(rs.getString("imageslist"));
 		return product;
+	}
+	public String getImageslist() {
+		return imageslist;
+	}
+
+	public void setImageslist(String imageslist) {
+		this.imageslist = imageslist;
 	}
 
 	public String getId() {
