@@ -97,7 +97,7 @@ public class ProductService {
 	}
 
 	public List getProductByPage(int page, int size) {
-		String sql = "select t.* from (select t.* ,t1.imageslist from (select * from s_product t where t.delete_flag='0' order by t.create_time desc) t  left join (select bussiness_id,group_concat(file_name)  as imageslist from s_file where bussiness_id is not null  group by bussiness_id ) t1 on t.id=t1.bussiness_id) t   limit ?,?";
+		String sql = "select t.* from (select t.* ,t1.imageslist from (select * from s_product t where t.delete_flag='0' order by t.create_time desc) t  left join (select bussiness_id,group_concat(id)  as imageslist from s_file where bussiness_id is not null  group by bussiness_id ) t1 on t.id=t1.bussiness_id) t   limit ?,?";
 		Object[] args = new Object[] { (page - 1) * size, size };
 		return jdbcService.queryForList(sql, args);
 	}
