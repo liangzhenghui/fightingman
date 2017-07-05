@@ -177,11 +177,11 @@ public class FileController {
 			String dictory = (String) map.get("directory");
 			String file_name = (String) map.get("file_name");
 			if (null != map) {
-				if (type.equals("small")) {
+				if (StringUtils.isNotBlank(type)&&type.equals("small")) {
 					dictory = dictory + File.separator + "small" + File.separator + file_name;
-				} else if (type.equals("medium")) {
+				} else if (StringUtils.isNotBlank(type)&&type.equals("medium")) {
 					dictory = dictory + File.separator + "medium" + File.separator + file_name;
-				} else if (type.equals("large")) {
+				} else if (StringUtils.isNotBlank(type)&&type.equals("large")) {
 					dictory = dictory + File.separator + "large" + File.separator + file_name;
 				} else {
 					dictory = dictory + File.separator + file_name;

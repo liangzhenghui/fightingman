@@ -246,14 +246,28 @@ public class FileService {
 		Map<String, Object> imageInfo = ImageUtil.getImageInfo(srcPath);
 		int width = (Integer)imageInfo.get("width");
 		int height = (Integer) imageInfo.get("height");
-		saveThumbnail(150, 150, srcPath, smallDestFilePath);
+		int temp=0;
+		if(width>height){
+			temp=height;
+		}else{
+			temp=width;
+		}
+		//150-300 300-1024
+		if (width > 150 || height > 150) {
+			saveThumbnail(150, 150, srcPath, smallDestFilePath);
+		}else{
+			saveThumbnail(temp, temp, srcPath, smallDestFilePath);
+		}
 		if (width > 300 || height > 300) {
 			saveThumbnail(300, 300, srcPath, mediumDestFilePath);
+		}else{
+			saveThumbnail(temp, temp, srcPath, mediumDestFilePath);
 		}
 		if (width > 1024 || height > 1024) {
 			saveThumbnail(1024, 1024, srcPath, largeDestFilePath);
-		}
-		
+		}else{
+			saveThumbnail(temp, temp, srcPath, largeDestFilePath);
+		}	
 	}
 
 }
