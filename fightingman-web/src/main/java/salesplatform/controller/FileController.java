@@ -171,7 +171,7 @@ public class FileController {
 
 	@RequestMapping(value = "/img")
 	public void getImgByImgId(HttpServletResponse response, HttpServletRequest request,
-			@RequestParam("imgId") String imgId, @RequestParam("type") String type) {
+			@RequestParam("imgId") String imgId, @RequestParam(required=false,value="type") String type) {
 		if (StringUtils.isNotBlank(imgId)) {
 			Map map = fileService.getProductImageInfo(imgId);
 			String dictory = (String) map.get("directory");
