@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page language="java"  import="ums.model.User"%>
+<%@ page language="java"  import="fightingman.ums.model.User"%>
 <%String contextPath = request.getContextPath();%>
 <%HttpSession httpSession = request.getSession(); 
 User user = (User)httpSession.getAttribute("user");
@@ -15,7 +15,7 @@ String username = user.getUsername();
 <link href="<%=contextPath%>/library/js/zTree/zTreeStyle.css" rel="stylesheet" />
 <script src="<%=contextPath%>/library/js/jquery/jquery-1.7.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<%=contextPath%>/library/js/easyui/jquery.easyui.min.js"></script>
-<title>大计划</title>
+<title>管理平台</title>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'north',border:false" style="background:#B3DFDA;">
@@ -26,7 +26,7 @@ String username = user.getUsername();
 						</td>
 						<td style="height:52px;">
 							<div style="color:#fff;font-size:22px;font-weight:bold;">
-								<a href="#" style="color:#000;font-size:22px;font-weight:bold;text-decoration:none">大计划</a>
+								<a href="#" style="color:#000;font-size:22px;font-weight:bold;text-decoration:none">管理平台</a>
 							</div>
 							<div style="color:#fff">
 								<a href="#" style="color:#000;text-decoration:none"></a>

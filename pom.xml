@@ -11,7 +11,24 @@
   	<module>fightingman-common</module>
     <module>fightingman-web</module>
     <module>fightingman-weixin</module>
+    <module>fightingman-security</module>
+    <module>fightingman-service</module>
+    <module>fightingman-aop</module>
+    <module>fightingman-test</module>
+    <module>fightingman-springcustomtag</module>
   </modules>
+  <dependencies>
+  		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.9</version>
+		</dependency>
+  </dependencies>
 	<build>
 	  <plugins>
 		<plugin>

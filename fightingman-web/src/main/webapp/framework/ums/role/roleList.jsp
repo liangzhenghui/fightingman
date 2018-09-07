@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <%String contextPath = request.getContextPath();%>
 <%@ page language="java"  import="util.SpringUtil"%>
-<%@ page language="java"  import="ums.service.RoleService"%>
+<%@ page language="java"  import="fightingman.ums.service.RoleService"%>
 <%@ page language="java"  import="java.util.List"%>
-<%@ page language="java"  import="ums.model.Role"%>
-<%@ page language="java"  import="ums.model.User"%>
-<%@ page language="java"  import="ums.service.UserService"%>
+<%@ page language="java"  import="fightingman.ums.model.Role"%>
+<%@ page language="java"  import="fightingman.ums.model.User"%>
+<%@ page language="java"  import="fightingman.ums.service.UserService"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>

@@ -6,7 +6,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import dao.JdbcService;
 
 /**
  * @author liangzhenghui
@@ -16,11 +15,7 @@ public class SpringUtil implements ApplicationContextAware{
 	
 	private static Logger log = Logger.getLogger(SpringUtil.class); 
 	private static final String[] CONTEXT_PATHS = {
- 		"classpath:spring/applicationContext.xml",
- 		"classpath:spring/applicationContext-datasource.xml",
-         "classpath:spring/applicationContext-service.xml",
-         "classpath:spring/applicationContext-aop.xml",
-         "classpath:spring/applicationContext-tx.xml"
+ 		"classpath:spring/spring-context.xml",
      };
 	
 	 private static ApplicationContext ctx;

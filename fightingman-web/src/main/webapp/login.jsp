@@ -43,7 +43,8 @@
 	function login() {
 		var userId = $("#userid").val();
 		var password = $("#password").val();
-		var url = '<%=contextPath%>/login.json';
+		var url = '<%=contextPath%>/login.do';
+		alert(url);
 		if(!userId){
 			$.messager.show({    // show error message
 	            title: '提示',
