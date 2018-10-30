@@ -2,47 +2,47 @@ package fightingman.service;
 
 import java.util.ArrayList;
 import java.util.List;
-/*
-import org.apache.log4j.Logger;*/
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.stereotype.Service;
 
-/*import web.model.User;
-import web.model.UserAuth;
-import web.service.UserService;*/
+import fightingman.model.Role;
+import fightingman.model.User;
+import fightingman.model.UserDetail;
+
 @Service
 public class CustomUserDetailsService extends JdbcDaoImpl {
-	/*private static Logger LOG = Logger.getLogger(CustomUserDetailsService.class);
-	private UserService userService;*/
+	private static Logger log = Logger.getLogger(CustomUserDetailsService.class);
+	@Resource
+	private UserService userService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		/*User user = userService.getUser(username);
+		User user = userService.getUserByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-		List<UserAuth> userAuthList = userService.queryAuthList(user.getUser_id());
-		if (userAuthList != null) {
-			for (UserAuth userAuth : userAuthList) {
-				authorities.add(new SimpleGrantedAuthority("ROLE_" + userAuth.getAuth_code()));
-				LOG.info("loginName:{},authCode:{}"+user.getLogin_name()+userAuth.getAuth_code());
+		List<Role> roles = userService.getRoles(user.getId());
+		if (roles != null) {
+			for (Role role : roles) {
+				authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+				log.info("userid:" + user.getUserid() + "rolename:" + role.getRoleName());
 			}
+			/*
+			 * security 通过配置<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+			 *	可以令任何路径都需要重新登录
+			 *  TODO 这样的做法是否正确?有其他解决办法吗?
+			 */
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		}
-		return new org.springframework.security.core.userdetails.User(user.getLogin_name(), user.getPassword(),
-				authorities);*/
-		return null;
+		return new UserDetail(user.getId(), user.getUserid(), user.getUsername(), user.getPassword(), authorities);
 	}
-
-	/*public UserService getUserService() {
-		return userService;
-	}
-
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}*/
 
 }

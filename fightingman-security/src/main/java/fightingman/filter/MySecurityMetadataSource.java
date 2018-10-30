@@ -17,12 +17,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import fightingman.model.Role;
-import fightingman.service.AuthorityService;
+import fightingman.service.RoleService;
 
 public class MySecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
 	private static Map<RequestMatcher, Collection<ConfigAttribute>> resourceMap = null;
-	private AuthorityService authorityService;
+	@Resource
+	private RoleService roleService;
 
 	public MySecurityMetadataSource() {
 		loadResourceDefine();
@@ -40,7 +41,7 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
     */
 	private void loadResourceDefine() {
 		//List list = authorityService.getAllResource();
-		resourceMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
+	/*	resourceMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
 		Collection<ConfigAttribute> atts3 = new ArrayList<ConfigAttribute>();
 		ConfigAttribute ca3 = new SecurityConfig("ROLE_ANONYMOUS");
 		atts3.add(ca3);
@@ -51,30 +52,45 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 		ConfigAttribute ca = new SecurityConfig("ADMIN");
 		atts1.add(ca);
 		resourceMap.put(new AntPathRequestMatcher("/lxj/activity/list.do"), atts1);
-		/*
+		
 		 * ConfigAttribute ca1 = new SecurityConfig("USER"); atts2.add(ca1);
 		 * resourceMap.put(new AnyRequestMatcher(), atts2);
-		 */
+		 
 		//{Ant [pattern='/login.do*']=[ROLE_ANONYMOUS], Ant [pattern='/loginFail.do*']=[ROLE_ANONYMOUS], Ant [pattern='/admin*']=[ADMIN]}
-		System.out.println("loadResourceDefine-----");
+		System.out.println("loadResourceDefine-----");*/
+		/*resourceMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
+		Collection<ConfigAttribute> atts1 = new ArrayList<ConfigAttribute>();
+		ConfigAttribute ca1 = new SecurityConfig("ROLE_ANONYMOUS");
+		atts1.add(ca1);
+		resourceMap.put(new AntPathRequestMatcher("/login"), atts1);*/
+	/*	resourceMap.put(new AntPathRequestMatcher("/welcome"), atts1);*/
+		/*resourceMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
+		Collection<ConfigAttribute> atts2 = new ArrayList<ConfigAttribute>();
+		ConfigAttribute ca2 = new SecurityConfig("系统管理员");
+		atts2.add(ca2);
+		//resourceMap.put(new AntPathRequestMatcher("/login"), atts2);
+		resourceMap.put(new AntPathRequestMatcher("/welcome.jsp"), atts2);
+		resourceMap.put(new AntPathRequestMatcher("/index"), atts2);*/
+		//resourceMap.put(new AntPathRequestMatcher("/systemMenuTree"), atts2);
+		
 	}
 
 	// 获取访问资源权限
 	@Override
 	public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
+		//找出所有的资源url,分别组装url:[角色集合]
 		resourceMap = new LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>>();
-		List<fightingman.model.Resource> resources = authorityService.getAllResource();
+		List<fightingman.model.Resource> resources = roleService.getAllResource();
 		for(fightingman.model.Resource resource:resources) {
-			List<Role> roles = authorityService.getAllRole(resource.getUrl());
+			List<Role> roles = roleService.getAllRole(resource.getUrl());
 			Collection<ConfigAttribute> atts = new ArrayList<ConfigAttribute>();
 			for(Role role:roles) {
-				ConfigAttribute ca = new SecurityConfig(role.getName());
+				ConfigAttribute ca = new SecurityConfig(role.getRoleName());
 				atts.add(ca);
 			}
 			resourceMap.put(new AntPathRequestMatcher(resource.getUrl()), atts);
 		}
 		HttpServletRequest request = ((FilterInvocation) object).getRequest();
-		System.out.println(((FilterInvocation) object).getRequestUrl());
 		//Ant [pattern='/login.do*']=[ROLE_ANONYMOUS]
 		for (Map.Entry<RequestMatcher, Collection<ConfigAttribute>> entry : resourceMap.entrySet()) {
 			if (entry.getKey().matches(request))
@@ -91,14 +107,6 @@ public class MySecurityMetadataSource implements FilterInvocationSecurityMetadat
 	@Override
 	public boolean supports(Class<?> clazz) {
 		return true;
-	}
-
-	public AuthorityService getAuthorityService() {
-		return authorityService;
-	}
-
-	public void setAuthorityService(AuthorityService authorityService) {
-		this.authorityService = authorityService;
 	}
 
 }

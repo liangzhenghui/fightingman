@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import fightingman.ums.model.Department;
-import fightingman.ums.model.DepartmentTree;
-import fightingman.ums.model.Dictionary;
+import fightingman.model.Department;
+import fightingman.model.DepartmentTree;
+import fightingman.model.Dictionary;
 import fightingman.ums.service.DepartmentService;
 
 /**

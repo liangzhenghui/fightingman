@@ -1,5 +1,7 @@
 package threadTest;
 
+import org.springframework.web.util.HtmlUtils;
+
 public class ThreadTest {
 	public static void main(String args[]){
 		ThreadObject thread=new ThreadObject();
@@ -8,5 +10,6 @@ public class ThreadTest {
 		Thread threadRunnable=new Thread(new RunnableTest());
 		threadRunnable.start();
 		System.out.println("main thread");
+		HtmlUtils.htmlEscape("xxxxxx", "UTF-8");
 	}
 }

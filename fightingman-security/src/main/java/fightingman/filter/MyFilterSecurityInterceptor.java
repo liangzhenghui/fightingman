@@ -20,7 +20,7 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 
 	private FilterInvocationSecurityMetadataSource securityMetadataSource;
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
-	
+
 	@Override
 	public Class<?> getSecureObjectClass() {
 		return FilterInvocation.class;
@@ -33,35 +33,35 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		
+
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
 		FilterInvocation fi = new FilterInvocation(request, response, chain);
-        invoke(fi);
+		invoke(fi);
 	}
-	
-	public void invoke(FilterInvocation fi) throws IOException, ServletException  {
+
+	public void invoke(FilterInvocation fi) throws IOException, ServletException {
 		InterceptorStatusToken token = super.beforeInvocation(fi);
-		try	{
+		try {
 			fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
 		} finally {
-			super .afterInvocation(token,  null );
+			super.afterInvocation(token, null);
 		}
-	} 
+	}
 
 	@Override
 	public void destroy() {
-		
+
 	}
 
 	public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
 		return securityMetadataSource;
 	}
 
-	public void setSecurityMetadataSource(
-			FilterInvocationSecurityMetadataSource securityMetadataSource) {
+	public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource securityMetadataSource) {
 		this.securityMetadataSource = securityMetadataSource;
 	}
 
@@ -69,9 +69,8 @@ public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor imp
 		return authenticationSuccessHandler;
 	}
 
-	public void setAuthenticationSuccessHandler(
-			AuthenticationSuccessHandler authenticationSuccessHandler) {
+	public void setAuthenticationSuccessHandler(AuthenticationSuccessHandler authenticationSuccessHandler) {
 		this.authenticationSuccessHandler = authenticationSuccessHandler;
 	}
-	
+
 }

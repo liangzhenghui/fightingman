@@ -3,32 +3,37 @@ package fightingman.ums.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
-import fightingman.ums.model.Dictionary;
-import fightingman.ums.model.Function;
-import fightingman.ums.model.Menu;
-import fightingman.ums.model.MenuTree;
-import fightingman.ums.model.User;
+import fightingman.model.Dictionary;
+import fightingman.model.Function;
+import fightingman.model.Menu;
+import fightingman.model.MenuTree;
+import fightingman.model.User;
+import fightingman.service.RoleService;
 import fightingman.ums.service.FunctionService;
 import fightingman.ums.service.MenuService;
-import fightingman.ums.service.RoleService;
+import fightingman.util.UserUtil;
+import model.Response;
+import util.ResponseUtil;
 
 /**
  * 菜单管理
@@ -50,6 +55,13 @@ public class MenuController {
 	@Resource
 	private RoleService roleService;
 
+	@RequestMapping(value = "/menu-list")
+	public ModelAndView rolelistPage() {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/framework/menu/menu-list");
+		return model;
+	}
+
 	/**
 	 * 根据第几页和每页显示几条记录返回菜单列表
 	 * 
@@ -57,33 +69,27 @@ public class MenuController {
 	 * @param rows
 	 * @return
 	 */
-	@RequestMapping(value = "/menuList")
-	public ModelAndView menuList(@RequestParam("page") String page,
-			@RequestParam("rows") String rows) {
-		ModelAndView model = new ModelAndView();
-		List menuList = menuService.getMenuByPage(Integer.parseInt(page),
-				Integer.parseInt(rows));
+	@RequestMapping(value = "/menu-list-data")
+	@ResponseBody
+	public Map menuList(@RequestParam("page") String page, @RequestParam("rows") String rows) {
+		List menuList = menuService.getMenuByPage(Integer.parseInt(page), Integer.parseInt(rows));
 		int total = menuService.getCount();
-		model.addObject("rows", menuList);
-		model.addObject("total", total);
-		return model;
+		Map map = new HashMap();
+		map.put("rows", menuList);
+		map.put("total", total);
+		return map;
 	}
 
 	@RequestMapping(value = "/menuDelete")
-	public ModelAndView menuDelete(@RequestParam("id") String id) {
-		ModelAndView model = new ModelAndView();
-		int result = menuService.deleteMenu(id);
-		if (result == 1) {
-			model.addObject("result", true);
-		} else {
-			model.addObject("result", false);
-		}
-		return model;
+	@ResponseBody
+	public Response menuDelete(@RequestParam("id") String id) {
+		menuService.deleteMenu(id);
+		return ResponseUtil.createSuccessResponse(null);
 	}
 
 	@RequestMapping(value = "/menuCreate")
-	public ModelAndView menuCreate(HttpServletRequest req,
-			@RequestParam("data") String data) {
+	@ResponseBody
+	public Response menuCreate(@RequestParam("data") String data) {
 		JSONObject json = JSONObject.parseObject(data);
 		ModelAndView model = new ModelAndView();
 		boolean isExits = false;
@@ -91,29 +97,23 @@ public class MenuController {
 		isExits = menuService.menuIsExits(menuName);
 		int result = 0;
 		if (!isExits) {
-			result = menuService.createMenu(json, req);
+			result = menuService.createMenu(json);
 		}
-		if (result == 1) {
-			model.addObject("result", true);
-		} else {
-			model.addObject("result", false);
+		Response response = new Response();
+		if(isExits) {
+			response.setError(true);
+			response.setResult("isExits");
 		}
-		model.addObject("isExits", isExits);
-		return model;
+		return response;
 	}
 
 	@RequestMapping(value = "/menuEdit")
-	public ModelAndView menuEdit(HttpServletRequest req,
-			@RequestParam("data") String data) {
+	@ResponseBody
+	public Response menuEdit(HttpServletRequest req, @RequestParam("data") String data) {
 		JSONObject json = JSONObject.parseObject(data);
-		ModelAndView model = new ModelAndView();
-		int result = menuService.UpdateMenu(json);
-		if (result == 1) {
-			model.addObject("result", true);
-		} else {
-			model.addObject("result", false);
-		}
-		return model;
+		menuService.UpdateMenu(json);
+		Response response = new Response();
+		return response;
 	}
 
 	@RequestMapping(value = "/menuTree")
@@ -125,19 +125,17 @@ public class MenuController {
 	}
 
 	@RequestMapping(value = "/menuGrantRole")
-	public ModelAndView menuGrantRole(@RequestParam("menuId") String[] menuIds,
-			@RequestParam("roleId") String roleId) throws IOException {
-		ModelAndView model = new ModelAndView();
-		boolean result = false;
+	@ResponseBody
+	public Response menuGrantRole(@RequestParam("menuId") String[] menuIds, @RequestParam("roleId") String roleId)
+			throws IOException {
 		menuService.grantMenuToRole(roleId, menuIds);
-		result = true;
-		model.addObject("result", result);
-		return model;
+		Response response = new Response();
+		return response;
 	}
 
 	@RequestMapping(value = "/getParentMenuSelectWhileCreate")
-	public void getParentMenuWhileCreate(HttpServletResponse resp)
-			throws IOException {
+	@ResponseBody
+	public List<Dictionary> getParentMenuWhileCreate() {
 		menuService.createRootMenu();
 		List menuList = menuService.getAllMenu();
 		List<Dictionary> dataList = new ArrayList<Dictionary>();
@@ -154,14 +152,11 @@ public class MenuController {
 		data.setDetail("");
 		data.setSelected(true);
 		dataList.add(data);
-		resp.setCharacterEncoding("UTF-8");
-		PrintWriter out = resp.getWriter();
-		out.print(JSON.toJSONString(dataList));
+		return dataList;
 	}
 
 	@RequestMapping(value = "/getParentMenuSelectWhileEdit")
-	public void getParentMenuWhileEdit(HttpServletResponse resp,
-			@RequestParam("pid") String pid) throws IOException {
+	public void getParentMenuWhileEdit(HttpServletResponse resp, @RequestParam("pid") String pid) throws IOException {
 		List menuList = menuService.getAllMenu();
 		List<Dictionary> dataList = new ArrayList<Dictionary>();
 		Dictionary data = null;
@@ -181,8 +176,8 @@ public class MenuController {
 	}
 
 	@RequestMapping(value = "/getMenuTypeWhileCreate")
-	public void getMenuTypeWhileCreate(HttpServletResponse resp)
-			throws IOException {
+	@ResponseBody
+	public List<Dictionary> getMenuTypeWhileCreate() {
 		List menuTypeList = menuService.getMenuType();
 		List<Dictionary> dataList = new ArrayList<Dictionary>();
 		Dictionary data = null;
@@ -193,14 +188,12 @@ public class MenuController {
 			data.setDetail((String) map.get("detail"));
 			dataList.add(data);
 		}
-		resp.setCharacterEncoding("UTF-8");
-		PrintWriter out = resp.getWriter();
-		out.print(JSON.toJSONString(dataList));
+		return dataList;
 	}
 
 	@RequestMapping(value = "/getMenuTypeWhileEdit")
-	public void getMenuTypeWhileEdit(HttpServletResponse resp,
-			@RequestParam("menuId") String menuId) throws IOException {
+	public void getMenuTypeWhileEdit(HttpServletResponse resp, @RequestParam("menuId") String menuId)
+			throws IOException {
 		List menuTypeList = menuService.getMenuType();
 		Menu menu = menuService.getMenuById(menuId);
 		String menuType = menu.getMenuType();
@@ -225,8 +218,8 @@ public class MenuController {
 	}
 
 	@RequestMapping(value = "/getFunctionSelectWhileCreate")
-	public void getFunctionSelectWhileCreate(HttpServletResponse resp)
-			throws IOException {
+	@ResponseBody
+	public List<Dictionary> getFunctionSelectWhileCreate()  {
 		List functionList = functionService.getAllFunction();
 		List<Dictionary> dataList = new ArrayList<Dictionary>();
 		Dictionary data = null;
@@ -244,14 +237,12 @@ public class MenuController {
 		data.setDetail("");
 		data.setSelected(true);
 		dataList.add(data);
-		resp.setCharacterEncoding("UTF-8");
-		PrintWriter out = resp.getWriter();
-		out.write(JSONObject.toJSONString(dataList));
+		return dataList;
 	}
 
 	@RequestMapping(value = "/getFunctionSelectWhileEdit")
-	public void getFunctionSelectWhileEdit(HttpServletResponse resp,
-			@RequestParam("menuId") String menuId) throws IOException {
+	public void getFunctionSelectWhileEdit(HttpServletResponse resp, @RequestParam("menuId") String menuId)
+			throws IOException {
 		List functionList = functionService.getAllFunction();
 		Menu menu = menuService.getMenuById(menuId);
 		List<Dictionary> dataList = new ArrayList<Dictionary>();
@@ -277,25 +268,19 @@ public class MenuController {
 		out.write(JSONObject.toJSONString(dataList));
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/systemMenuTree")
-	public void SystemMenuTree(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
-		HttpSession session = req.getSession();
-		User user = (User) session.getAttribute("user");
+	public List<MenuTree> SystemMenuTree(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		User user = UserUtil.getLoginUser();
 		List<MenuTree> menuTreeList = null;
-		if (user != null) {
-			List roleList = roleService.getRolesByUserId(user.getId());
-			menuTreeList = menuService.getMenuTreeByRoles(roleList);
-		}
-		resp.setCharacterEncoding("UTF-8");
-		PrintWriter out = resp.getWriter();
-		String menuTree = JSON.toJSONString(menuTreeList);
-		out.print(menuTree);
+		List roleList = roleService.getRolesByUserId(user.getId());
+		menuTreeList = menuService.getMenuTreeByRoles(roleList);
+		return menuTreeList;
 	}
 
 	@RequestMapping(value = "/editMenusOfRole")
-	public void EditMenusOfRole(@RequestParam("roleId") String roleId,
-			HttpServletResponse resp) throws IOException {
+	@ResponseBody
+	public Response EditMenusOfRole(@RequestParam("roleId") String roleId) {
 		List<MenuTree> menuTreeListOfOneRole = null;
 		List<MenuTree> menuTreeOfAll = null;
 		if (StringUtils.isNotBlank(roleId)) {
@@ -310,9 +295,6 @@ public class MenuController {
 				}
 			}
 		}
-		resp.setCharacterEncoding("UTF-8");
-		PrintWriter out = resp.getWriter();
-		String tree = JSON.toJSONString(menuTreeOfAll);
-		out.print(tree);
+		return ResponseUtil.createSuccessResponse(menuTreeOfAll);
 	}
 }

@@ -15,9 +15,9 @@
 	<description>Spring Restful 配置</description>
 
 	<mvc:annotation-driven />
+	<mvc:resources mapping="/static/**" location="/static/"/> 
 	<!--检测注解 -->
-	<context:component-scan base-package="fightingman.ums.controller,fightingman.lxj.controller" />
-	<context:component-scan base-package="fightingman.*"/>
+	<context:component-scan base-package="fightingman.common.controller,fightingman.ums.controller,fightingman.lxj.controller" />
 	<!-- 支持上传文件 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -56,23 +56,23 @@
 					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 					<property name="viewClass"
 						value="org.springframework.web.servlet.view.JstlView" />
-					<property name="prefix" value="/views/" />
+					<property name="prefix" value="/WEB-INF/views/" />
 					<property name="suffix" value=".jsp" />
 				</bean>
 			</list>
 		</property>
-		<property name="defaultViews">
+	<!-- 	<property name="defaultViews">
 			<list>
-				<!-- for application/json -->
+				for application/json
 				<bean
 					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-				<!-- for application/xml -->
-				<!-- <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+				for application/xml
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
 					<property name="marshaller">
 						<bean class="org.springframework.oxm.xstream.XStreamMarshaller" />
 					</property>
-				</bean> -->
+				</bean>
 			</list>
-		</property>
+		</property> -->
 	</bean>
 </beans>  

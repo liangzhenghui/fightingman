@@ -4,7 +4,10 @@
  */
 package fightingman.lxj.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Activity {
+	@NotBlank(message="不能为空")
 	private String activity_name;
 	private String activity_place;
 	private String activity_date;

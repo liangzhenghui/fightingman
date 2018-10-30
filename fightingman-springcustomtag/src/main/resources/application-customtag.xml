@@ -11,6 +11,9 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
         http://www.wjs.com/schema/user http://www.wjs.com/schema/user.xsd">
-
+        <!--  <context:component-scan>包含了<context:annotation-config/>,有了前者就不用再写后者
+        -->
+	<context:component-scan base-package="service"/>
     <myTag:user id="id" name="name"/>
+    <bean id="process" class="person.me.BeanPostProcessor"></bean>
 </beans>

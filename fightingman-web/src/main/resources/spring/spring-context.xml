@@ -12,5 +12,5 @@
 	<!-- 配置要扫描的包 -->
 	<context:component-scan base-package="fightingman" />
 	<import resource="classpath:spring/spring-context-service.xml" />
-	<import resource="classpath:security/spring-context.xml" />
+	<import resource="classpath:security/spring-security.xml" />
 </beans>

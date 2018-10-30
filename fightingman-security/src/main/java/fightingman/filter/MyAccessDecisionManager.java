@@ -14,13 +14,9 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 
 	@Override
 	public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-		System.out.println("xxxxxxxxxxxxx");
 		if(configAttributes == null) {
 			return;
 		}
-		
-		System.out.println("MyAccessDecisionManager decide object : " + object.toString());
-		
 		for(ConfigAttribute ca : configAttributes) {
 			String needRole = ((SecurityConfig)ca).getAttribute();
 			if(needRole.equals("ROLE_ANONYMOUS")) {
@@ -28,7 +24,8 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 			}
 			
 			for(GrantedAuthority ga : authentication.getAuthorities()) {
-				if(needRole.equals(ga.getAuthority())) {
+				//在CustomUserDetailsService中已经默认给每个用户添加了ROLE_USER角色,所以这里需要添加过滤掉ROLE_USER角色
+				if(!needRole.equals("ROLE_USER")&&needRole.equals(ga.getAuthority())) {
 					return;
 				}
 			}

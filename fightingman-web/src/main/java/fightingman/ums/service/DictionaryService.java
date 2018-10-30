@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import dao.JdbcService;
-import fightingman.ums.model.Dictionary;
+import fightingman.model.Dictionary;
 import util.SpringUtil;
 
 /**

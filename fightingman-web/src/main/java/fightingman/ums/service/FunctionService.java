@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import dao.JdbcService;
-import fightingman.ums.model.Function;
-import fightingman.ums.model.User;
-import fightingman.ums.util.UserUtil;
+import fightingman.model.Function;
+import fightingman.model.User;
+import fightingman.util.UserUtil;
 import util.SpringUtil;
 
 /**
@@ -63,9 +63,8 @@ public class FunctionService {
 		}
 	}
 
-	public int createFunction(String functionName, String url,
-			HttpServletRequest req) {
-		User user = UserUtil.getLoginUser(req);
+	public int createFunction(String functionName, String url) {
+		User user = UserUtil.getLoginUser();
 		String sql = " insert into s_framework_function(id, function_name, url,creator,create_time) values(?,?,?,?,?)";
 		Object[] args = new Object[] { UUID.randomUUID(), functionName, url,
 				user.getUserid(), new Date() };

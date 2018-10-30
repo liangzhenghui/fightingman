@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 
 import dao.JdbcService;
-import fightingman.ums.model.Function;
-import fightingman.ums.model.Menu;
-import fightingman.ums.model.MenuTree;
-import fightingman.ums.model.Role;
-import fightingman.ums.model.RoleMenu;
-import fightingman.ums.model.User;
-import fightingman.ums.util.UserUtil;
+import fightingman.model.Function;
+import fightingman.model.Menu;
+import fightingman.model.MenuTree;
+import fightingman.model.Role;
+import fightingman.model.RoleMenu;
+import fightingman.model.User;
+import fightingman.util.UserUtil;
 import util.SpringUtil;
 
 /**
@@ -197,8 +197,8 @@ public class MenuService {
 		}
 	}
 
-	public int createMenu(JSONObject json, HttpServletRequest req) {
-		User user = UserUtil.getLoginUser(req);
+	public int createMenu(JSONObject json) {
+		User user = UserUtil.getLoginUser();
 		String menuName = json.getString("menuName");
 		String parentId = json.getString("parentId");
 		String parentMenuZw = json.getString("parentMenuZw");

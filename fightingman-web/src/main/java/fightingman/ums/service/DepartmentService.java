@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 
 import dao.JdbcService;
-import fightingman.ums.model.Department;
-import fightingman.ums.model.DepartmentTree;
-import fightingman.ums.model.User;
-import fightingman.ums.util.UserUtil;
+import fightingman.model.Department;
+import fightingman.model.DepartmentTree;
+import fightingman.model.User;
+import fightingman.util.UserUtil;
 import util.SpringUtil;
 
 /**

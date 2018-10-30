@@ -1,19 +1,37 @@
 package fightingman.model;
 
-public class User {
-	private long user_id;
-	private String login_name;
+import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.springframework.jdbc.core.RowMapper;
+
+public class User implements RowMapper,Serializable{
+	private String id;
+	private String userid;
+	private String username;
 	private String password;
-	private String gmt_create;
+	private String mobile;
+	private String ck;
 
-	public String getLogin_name() {
-		return login_name;
+	public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+		User user = new User();
+		user.setId(rs.getString("id"));
+		user.setUserid(rs.getString("user_id"));
+		user.setUsername(rs.getString("user_name"));
+		user.setPassword(rs.getString("password"));
+		user.setMobile(rs.getString("mobile"));
+		return user;
+	}
+	
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setLogin_name(String login_name) {
-		this.login_name = login_name;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
@@ -22,19 +40,36 @@ public class User {
 		this.password = password;
 	}
 
-	public String getGmt_create() {
-		return gmt_create;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setGmt_create(String gmt_create) {
-		this.gmt_create = gmt_create;
+	public String getUsername() {
+		return username;
 	}
 
-	public long getUser_id() {
-		return user_id;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public String getId() {
+		return id;
 	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getCk() {
+		return ck;
+	}
+
+	public void setCk(String ck) {
+		this.ck = ck;
+	}
+
 }

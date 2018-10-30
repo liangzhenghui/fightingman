@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%String contextPath = request.getContextPath();%>
 <%@ page language="java"  import="util.SpringUtil"%>
@@ -69,4 +69,4 @@ function createDepartment() {
 }
 </script>
 </body>
-</html>
+</html> --%>
