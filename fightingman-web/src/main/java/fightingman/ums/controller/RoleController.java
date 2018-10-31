@@ -94,26 +94,23 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/roleGrantUser")
-	public ModelAndView roleGrantUser(@RequestParam("data") String data) {
+	@ResponseBody
+	public Response roleGrantUser(@RequestParam("data") String data) {
 		JSONObject json = JSONObject.parseObject(data);
 		String userId = json.getString("userId");
 		String roleId = json.getString("roleId");
 		String roleName = json.getString("roleName");
 		String userName = json.getString("userName");
-		ModelAndView model = new ModelAndView();
 		boolean hasTheRole = false;
 		hasTheRole = roleService.userHasTheRole(userId, roleId);
-		int result = 0;
 		if (!hasTheRole) {
-			result = roleService.roleGrantUser(roleId, userId, roleName, userName);
+			roleService.roleGrantUser(roleId, userId, roleName, userName);
 		}
-		if (result == 1) {
-			model.addObject("result", true);
-		} else {
-			model.addObject("result", false);
-		}
-		model.addObject("hasTheRole", hasTheRole);
-		return model;
+		Response response = new Response();
+		Map map = new HashMap();
+		map.put("hasTheRole", hasTheRole);
+		response.setResult(map);
+		return response;
 	}
 
 	@RequestMapping(value = "/getAllRoles")

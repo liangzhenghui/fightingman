@@ -41,7 +41,7 @@
 }
 </style>
 </head>
-<body>
+<body >
 	<div id="toolbar">
 		<a href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="icon-add" plain="true" onclick="newUser()">新建用户</a> <a
@@ -231,20 +231,27 @@ function destroyUser(){
     if (row){
         $.messager.confirm('删除用户','确定要删除么？',function(r){
             if (r){
-                $.post('${ctx}/userDelete',{id:row.id},function(json){
-                    if (json.result){
-                    	$.messager.show({    // show error message
+        		commonAjax({
+        			url : '${ctx}/userDelete',
+        			type : "POST",
+        			data : {
+        				"id" : row.id
+        			},
+        			dataType : "json"
+        		}, function(data) {
+        			if (!data.error) {
+        				$.messager.show({    // show error message
                             title: '提示',
                             msg: "删除成功"
                         });
                         $('#userList').datagrid('reload');    // reload the user data
-                    } else {
-                        $.messager.show({    // show error message
+        			} else {
+        				$.messager.show({    // show error message
                             title: '提示',
                             msg: "删除失败"
                         });
-                    }
-                },'json');
+        			}
+        		});
             }
         });
     }
@@ -287,15 +294,25 @@ function addRoleSubmit(){
 	        });
 	    }
 	});
-	var url = '${ctx}/roleGrantUse';
+	var url = '${ctx}/roleGrantUser';
 	var data = form2JsonStr("fm2");
 	var flag = $("#fm2").form('validate');
 	if(flag&&$('#roleId').combobox('getValue')!=""){
-		$.post(url, {data:data},function(json){
-			var hasTheRole = json.hasTheRole;
-			var result = json.result;
-			if(!hasTheRole){
-				if(result) {
+		commonAjax({
+			url : url,
+			type : "POST",
+			data : {
+				"data" : data
+			},
+			dataType : "json"
+		}, function(data) {
+			if (!data.error) {
+				if(data.result.hasTheRole){
+					$.messager.show({
+		                title: '提示',
+		                msg: "该用户已经有这个角色"
+		            });
+				}else{
 					$('#dlg2').dialog('close');
 					 $('#userList').datagrid('reload');
 					$.messager.show({
@@ -303,20 +320,20 @@ function addRoleSubmit(){
 		                msg: "给用户赋予角色成功"
 		            });
 				}
-			}else{
+			} else {
 				$.messager.show({
 	                title: '提示',
-	                msg: "该用户已经有这个角色"
+	                msg: "创建失败"
 	            });
 			}
-		},"json");
+		});
 	}
 }
 
 function manageUserRole(){
 	var row = $('#userList').datagrid('getSelected');
 	if(row){
-		window.location.href="${ctx}/framework/ums/user/user-role-list.jsp?userId="+ row.id;
+		window.location.href="${ctx}/user-role-list?id="+ row.id;
 			} else {
 				$.messager.show({ // show error message
 					title : '提示',

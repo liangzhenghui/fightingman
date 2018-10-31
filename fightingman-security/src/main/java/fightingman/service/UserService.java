@@ -229,7 +229,7 @@ public class UserService {
 	
 	
 	public List<Role> getRoles(String userId) {
-		String sql = "select * from s_framework_role where id in(select role_id from s_framework_user_role where user_id=?)";
+		String sql = "select * from s_framework_role where id in(select role_id from s_framework_user_role where user_id=? and delete_flag='0')";
 		return jdbcService.queryForList(sql, new Object[] {userId},new Role());
 	}
 	

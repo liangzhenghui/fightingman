@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix='sec' uri='http://www.springframework.org/security/tags' %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <jsp:include page="header.jsp"></jsp:include>
 <title>管理平台</title>
@@ -23,17 +24,19 @@
 							</div>
 						</td>
 						<td
-							style="padding-right: 5px; text-align: right; vertical-align: bottom;">
-							<div id="topmenu">
-								<a href="#" style="color: #000; text-decoration: none"
+							style="padding-right: 5px; text-align: right;">
+							<sec:authentication property="principal.username"></sec:authentication>
+							<a href="#" style="color: #000; text-decoration: none"
 									onclick="logout()">退出</a>
-							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
+	 <form action="${ctx}/logout" method="post" id="logoutForm" style="display:none">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    </form>
 	<div data-options="region:'west',split:true,title:'菜单'"
 		style="width: 200px; padding: 10px;">
 		<ul id="menuTree" class="ztree">
@@ -85,31 +88,8 @@
 		//zNodes = ${result};
 		//'${xxx}'方式可以获取spring返回的数据
 		var zNodes = jQuery.parseJSON('${result}');
-		//zNodes = JSON.parse(zNodes);
 		var treeObj = $.fn.zTree.init($("#menuTree"), setting, zNodes);
 		expandFirstNode(treeObj);
-	/* 	$(function(){
-			var header = $("meta[name='_csrf_header']").attr("content");
-			var token =$("meta[name='_csrf']").attr("content");
-			$.ajax({
-	            url : "${ctx}/systemMenuTree",
-	            type : "POST",
-	            data : "",
-	            contentType : 'application/json;charset=utf-8',
-	            //async : false,
-	            beforeSend : function(xhr) {
-	                xhr.setRequestHeader(header, token);
-	            }, 
-	            success : function(data) {
-	            	//将json对象转换成js识别的对象
-					zNodes = data;
-	            	console.info(data);
-					var treeObj = $.fn.zTree.init($("#menuTree"), setting, zNodes);
-					expandFirstNode(treeObj);
-	            },
-	            error : function(xhr, ajaxOptions, throwError) { }
-	　　　　　　　});
-		}); */
 		
 		function expandFirstNode(treeObj){
 			var nodes = treeObj.getNodes();
@@ -136,14 +116,7 @@
 	   function logout(){
 	    	var result = confirm("确定退出吗?"); 
 	    	if(result){
-	    		var url = "${ctx}/logout.json";
-	    		$.post(url,{},function(data){
-	    			if(data.result){
-	    				alert("退出登录成功");
-	    				window.location.href="${ctx}/index.jsp";
-	    			}
-	    		});
-	    	}else{
+	    		document.getElementById("logoutForm").submit();
 	    	}
 	    }
 

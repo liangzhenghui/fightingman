@@ -29,15 +29,16 @@
 		<!-- post请求需要带csrf,否则禁止访问 -->
 		<!-- <csrf disabled="true" /> -->
 		<intercept-url pattern="/login" access="hasRole('ROLE_ANONYMOUS')" />
+		<intercept-url pattern="/logout" access="hasRole('ROLE_ANONYMOUS')" />
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
-		<form-login login-page="/login" default-target-url="/welcome"
+		<form-login login-page="/login" default-target-url="/welcome.jsp"
 			authentication-failure-url="/login?error" username-parameter="username"
 			password-parameter="password" />
 		<form-login />
+		<logout logout-success-url="/login?logout"/>
 		<!-- 弹出一个对话框 -->
 		<!-- <http-basic/> -->
 		<!-- 单页面情况下暂时没找到方法带crsf到后端验证 -->
-		<logout logout-success-url="/login?logout" />
 		<!-- 登录成功了,但是没权限就重置这个页面 -->
 		<access-denied-handler error-page="/403" />
 		<!-- 增加一个自定义filter，这个filter位于FILTER_SECURITY_INTERCEPTOR之前 ,这样就先执行自定义的过滤器,避免执行系统默认的过滤器 -->

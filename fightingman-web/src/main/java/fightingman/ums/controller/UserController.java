@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import fightingman.model.User;
 import fightingman.service.UserService;
@@ -92,37 +90,36 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/userDelete")
-	public ModelAndView userDelete(@RequestParam("id") String id) {
-		ModelAndView model = new ModelAndView();
-		int result = userService.deleteUser(id);
-		if (result == 1) {
-			model.addObject("result", true);
-		} else {
-			model.addObject("result", false);
-		}
-		return model;
+	@ResponseBody
+	public Response userDelete(@RequestParam("id") String id) {
+		userService.deleteUser(id);
+		return ResponseUtil.createSuccessResponse(null);
 	}
 
 	@RequestMapping(value = "/user-role-delete")
-	public ModelAndView userRoleDelete(@RequestParam("id") String id) {
+	@ResponseBody
+	public Response userRoleDelete(@RequestParam("id") String id) {
+		userService.deleteUserRole(id);
+		return ResponseUtil.createSuccessResponse(null);
+	}
+	
+	@RequestMapping(value = "/user-role-list")
+	public ModelAndView userRoleList(@RequestParam("id") String id) {
 		ModelAndView model = new ModelAndView();
-		int result = userService.deleteUserRole(id);
-		if (result == 1) {
-			model.addObject("result", true);
-		} else {
-			model.addObject("result", false);
-		}
+		model.addObject("userId", id);
+		model.setViewName("/framework/user/user-role-list");
 		return model;
 	}
 
-	@RequestMapping(value = "/user-role-list")
-	public ModelAndView userRoleList(@RequestParam("page") String page, @RequestParam("rows") String rows,
+	@RequestMapping(value = "/user-role-list-data")
+	@ResponseBody
+	public Map userRoleList(@RequestParam("page") String page, @RequestParam("rows") String rows,
 			@RequestParam("userId") String userId) {
-		ModelAndView model = new ModelAndView();
+		Map map = new HashMap();
 		List userRoleList = userService.getUserRoleByPage(Integer.parseInt(page), Integer.parseInt(rows), userId);
 		int total = userService.getUserRoleCount();
-		model.addObject("rows", userRoleList);
-		model.addObject("total", total);
-		return model;
+		map.put("rows", userRoleList);
+		map.put("total", total);
+		return map;
 	}
 }
