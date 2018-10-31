@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix='sec' uri='http://www.springframework.org/security/tags' %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,9 +47,11 @@
 		<a href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="icon-add" plain="true" onclick="newUser()">新建用户</a> <a
 			href="javascript:void(0)" class="easyui-linkbutton"
-			iconCls="icon-edit" plain="true" onclick="editUser()">编辑用户</a> <a
-			href="javascript:void(0)" class="easyui-linkbutton"
-			iconCls="icon-remove" plain="true" onclick="destroyUser()">删除用户</a> <a
+			iconCls="icon-edit" plain="true" onclick="editUser()">编辑用户</a> 
+			<sec:authorize access="hasRole('系统管理员')">
+				<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除用户</a>
+			</sec:authorize> 
+			<a
 			href="javascript:void(0)" class="easyui-linkbutton"
 			iconCls="icon-add" plain="true" onclick="addRole()">分配角色</a> <a
 			href="javascript:void(0)" class="easyui-linkbutton"
