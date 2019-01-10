@@ -17,6 +17,8 @@
 		<module>fightingman-aop</module>
 		<module>fightingman-test</module>
 		<module>fightingman-springcustomtag</module>
+		<module>fightingman-dubbo-demo-provider</module>
+		<module>fightingman-dubbo-demo</module>
 	</modules>
 	<dependencies>
 		<dependency>
